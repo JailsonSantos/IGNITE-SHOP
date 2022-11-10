@@ -13,6 +13,8 @@ import { GetStaticProps } from "next";
 import Stripe from "stripe";
 import Link from "next/link";
 
+import Head from 'next/head';
+
 interface HomeProps {
   products: {
     id: string;
@@ -31,24 +33,29 @@ export default function Home({ products }: HomeProps) {
   })
 
   return (
+    <>
+      <Head>
+        <title>Home | Ignite Shop</title>
+      </Head>
+      <HomeContainer ref={sliderRef} className="keen-slider">
 
-    <HomeContainer ref={sliderRef} className="keen-slider">
-      {products.map(product => {
-        return (
-          <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
-            <Product className="keen-slider__slide">
-              <Image src={product.imageUrl} width={410} height={350} alt="" />
+        {products.map(product => {
+          return (
+            <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
+              <Product className="keen-slider__slide">
+                <Image src={product.imageUrl} width={410} height={350} alt="" />
 
-              <footer>
-                <strong>{product.name}</strong>
-                <span>{product.price}</span>
-              </footer>
-            </Product>
-          </Link>
-        )
-      })}
+                <footer>
+                  <strong>{product.name}</strong>
+                  <span>{product.price}</span>
+                </footer>
+              </Product>
+            </Link>
+          )
+        })}
 
-    </HomeContainer>
+      </HomeContainer>
+    </>
   )
 }
 
@@ -94,9 +101,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   // Dica sempre que for trabalhar com preço, transformar o valor em centavos, ou seja multiplicar x 100
   // Criar uma nova lista, apenas com os dados necessários
-
+  
   const products = response.data.map(product => {
-
+    
     const price = product.default_price as Stripe.Price
 
     return {
