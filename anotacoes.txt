@@ -1,0 +1,3 @@
+# Melhorias
+- Adicionar setas de proximo e voltar no carrossel;
+- Adicionar blud hash para carregamento prévio de imagens;
