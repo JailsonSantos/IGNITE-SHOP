@@ -13,17 +13,23 @@ interface ProductProps {
     price: string;
     imageUrl: string;
     description: string;
+    defaultPriceId: string;
   }
 }
 
 export default function Product({ product }: ProductProps) {
-  // Buscando parametros pela rota
+
   //const { query } = useRouter();
   const { isFallback } = useRouter();
 
   if (isFallback) {
     return <p>Loading...</p>
   }
+
+  function handleBuyProduct() {
+    console.log(product.defaultPriceId);
+  }
+
 
   return (
     <ProductContainer>
@@ -36,7 +42,7 @@ export default function Product({ product }: ProductProps) {
         <span>{product.price}</span>
         <p>{product.description}</p>
 
-        <button>
+        <button onClick={handleBuyProduct}>
           Comprar agora
         </button>
       </ProductDetails>
@@ -44,18 +50,15 @@ export default function Product({ product }: ProductProps) {
   )
 }
 
-// Criando SSG com parametros dinâmicos
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [
-      { params: { id: 'prod_MlqtPjMYvbV0vd' } }
+      { params: { id: 'prod_MlqtPjMYvbV0vd' } },
     ],
     fallback: true,
   }
 }
 
-
-// Criando SSG para paginas produtos
 export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params }) => {
   const productId = params.id;
 
@@ -67,17 +70,18 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
 
   return {
     props: {
-      products: {
+      product: {
         id: product.id,
         name: product.name,
         imageUrl: product.images[0],
-        description: product.description,
         price: new Intl.NumberFormat('pt-BR', {
           style: 'currency',
           currency: 'BRL'
         }).format(price.unit_amount / 100),
+        description: product.description,
+        defaultPriceId: price.id,
       }
     },
-    revalidate: 60 * 60 * 1, // 1 hour
+    revalidate: 60 * 60 * 1 // 1 hours
   }
 }
