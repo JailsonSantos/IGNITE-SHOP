@@ -3,7 +3,8 @@ import Image from "next/image";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { stripe } from "../../lib/stripe";
 import { ImageContainer, ProductContainer, ProductDetails } from "../../styles/pages/product";
-// import { useRouter } from "next/router";
+
+import { useRouter } from "next/router";
 
 interface ProductProps {
   product: {
@@ -18,6 +19,11 @@ interface ProductProps {
 export default function Product({ product }: ProductProps) {
   // Buscando parametros pela rota
   //const { query } = useRouter();
+  const { isFallback } = useRouter();
+
+  if (isFallback) {
+    return <p>Loading...</p>
+  }
 
   return (
     <ProductContainer>
@@ -44,7 +50,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: [
       { params: { id: 'prod_MlqtPjMYvbV0vd' } }
     ],
-    fallback: false,
+    fallback: true,
   }
 }
 
