@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import Image from "next/image";
-import { GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { stripe } from "../../lib/stripe";
 import { ImageContainer, ProductContainer, ProductDetails } from "../../styles/pages/product";
 // import { useRouter } from "next/router";
@@ -38,6 +38,18 @@ export default function Product({ product }: ProductProps) {
   )
 }
 
+// Criando SSG com parametros dinâmicos
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [
+      { params: { id: 'prod_MlqtPjMYvbV0vd' } }
+    ],
+    fallback: false,
+  }
+}
+
+
+// Criando SSG para paginas produtos
 export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params }) => {
   const productId = params.id;
 
