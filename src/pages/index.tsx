@@ -17,7 +17,7 @@ interface HomeProps {
   products: {
     id: string;
     name: string;
-    price: number;
+    price: string;
     imageUrl: string;
   }[]
 }
