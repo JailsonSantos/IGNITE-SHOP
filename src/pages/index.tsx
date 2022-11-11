@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { HomeContainer, Product } from "../styles/pages/home"
+import { HomeContainer, NextButton, PrevButton, Product } from "../styles/pages/home"
 
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
@@ -15,6 +15,10 @@ import Link from "next/link";
 
 import Head from 'next/head';
 
+import { Handbag } from 'phosphor-react';
+
+import { CaretRight, CaretLeft } from "phosphor-react";
+
 interface HomeProps {
   products: {
     id: string;
@@ -25,7 +29,7 @@ interface HomeProps {
 }
 export default function Home({ products }: HomeProps) {
 
-  const [sliderRef] = useKeenSlider({
+  const [sliderRef, instanceRef] = useKeenSlider({
     slides: {
       perView: 3,
       spacing: 48,
@@ -39,20 +43,34 @@ export default function Home({ products }: HomeProps) {
       </Head>
       <HomeContainer ref={sliderRef} className="keen-slider">
 
+        <PrevButton onClick={() => instanceRef.current.prev()}>
+          <CaretLeft size={32} weight="bold" />
+        </PrevButton>
+
         {products.map(product => {
           return (
-            <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
-              <Product className="keen-slider__slide">
-                <Image src={product.imageUrl} width={410} height={350} alt="" />
+            <Product key={product.id} className="keen-slider__slide">
+              <Link href={`/product/${product.id}`} prefetch={false}>
+                <a>
+                  <Image src={product.imageUrl} width={410} height={350} alt="" />
+                </a>
+              </Link>
 
-                <footer>
+              <footer>
+                <div>
                   <strong>{product.name}</strong>
                   <span>{product.price}</span>
-                </footer>
-              </Product>
-            </Link>
+                </div>
+
+                <Handbag size={30} />
+              </footer>
+            </Product>
           )
         })}
+
+        <NextButton onClick={() => instanceRef.current.next()}>
+          <CaretRight size={32} weight="bold" />
+        </NextButton>
 
       </HomeContainer>
     </>

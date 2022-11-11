@@ -5,7 +5,7 @@ export const HomeContainer = styled('main', {
   minHeight: 500,
   display: 'flex',
   marginLeft: 'auto',
-  maxWidth: 'calc(100vw - ((100vw - 1180px) / 2))'
+  maxWidth: 'calc(100vw - ((100vw - 1180px) / 2))',
 })
 
 export const Product = styled('a', {
@@ -23,7 +23,7 @@ export const Product = styled('a', {
   },
 
   footer: {
-    padding: '2rem',
+    padding: '1rem',
     left: '0.25rem',
     right: '0.25rem',
     bottom: '0.25rem',
@@ -42,8 +42,14 @@ export const Product = styled('a', {
     transform: 'translateY(110%)',
     transition: 'all 0.2s ease-in-out',
 
+    div: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+
     'strong': {
       fontSize: '$lg',
+      marginBottom: '10px',
     },
 
     span: {
@@ -51,6 +57,10 @@ export const Product = styled('a', {
       color: '$green300',
       fontWeight: 'bold',
     },
+    a: {
+      textDecoration: 'none',
+      color: '$white',
+    }
   },
 
   '&:hover': {
@@ -58,5 +68,58 @@ export const Product = styled('a', {
       opacity: 1,
       transform: 'translateY(0%)',
     }
+  },
+
+  svg: {
+    padding: 5,
+    borderRadius: 4,
+    background: '$green500',
+    border: '1px solid $green500',
+
+
+    '&:hover': {
+      cursor: 'pointer',
+      background: '$green300',
+      border: '1px solid $green300',
+    },
+  }
+});
+
+export const NextButton = styled('button', {
+  right: 5,
+  border: 0,
+  top: '35vh',
+  zIndex: 9999,
+  minWidth: '40px',
+  minHeight: '40px',
+  color: '$gray100',
+  borderRadius: '20px',
+  position: 'absolute',
+  background: 'transparent',
+
+  '&:hover': {
+    cursor: 'pointer',
+    color: '$gray300',
+    border: '1px solid $gray300',
+  }
+
+});
+
+export const PrevButton = styled('button', {
+  left: 5,
+  border: 0,
+  top: '35vh',
+  zIndex: 9999,
+  minWidth: '40px',
+  minHeight: '40px',
+  color: '$gray100',
+  borderRadius: '20px',
+  position: 'absolute',
+  background: 'transparent',
+
+  '&:hover': {
+    cursor: 'pointer',
+    color: '$gray300',
+    border: '1px solid $gray300',
   }
 });
